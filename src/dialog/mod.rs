@@ -20,11 +20,11 @@ pub use models::*;
 // 使用主模块的 FilePath
 pub use crate::FilePath;
 #[cfg(desktop)]
-mod desktop;
+pub(crate) mod desktop;
 #[cfg(mobile)]
-mod mobile;
+pub(crate) mod mobile;
 
-mod commands;
+pub(crate) mod commands;
 mod error;
 mod models;
 
@@ -85,7 +85,7 @@ impl<R: Runtime> Dialog<R> {
     /// - Message dialog:
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -102,13 +102,13 @@ impl<R: Runtime> Dialog<R> {
     /// - Ask dialog:
     ///
     /// ```
-    /// use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
+    /// use tauri_plugin_advanced_file_manager::{DialogExt, MessageDialogButtons};
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog()
     ///       .message("Are you sure?")
-    ///       .buttons(MessageDialogButtons::OkCancelCustom("Yes", "No"))
+    ///       .buttons(MessageDialogButtons::OkCancelCustom("Yes".to_string(), "No".to_string()))
     ///       .show(|yes| {
     ///         println!("user said {}", if yes { "yes" } else { "no" });
     ///       });
@@ -119,7 +119,7 @@ impl<R: Runtime> Dialog<R> {
     /// - Message dialog with OK button:
     ///
     /// ```
-    /// use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
+    /// use tauri_plugin_advanced_file_manager::{DialogExt, MessageDialogButtons};
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -141,7 +141,7 @@ impl<R: Runtime> Dialog<R> {
     /// but note that it cannot be executed on the main thread as it will freeze your application.
     ///
     /// ```
-    /// use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
+    /// use tauri_plugin_advanced_file_manager::{DialogExt, MessageDialogButtons};
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -149,7 +149,7 @@ impl<R: Runtime> Dialog<R> {
     ///     std::thread::spawn(move || {
     ///       let yes = handle.dialog()
     ///         .message("Are you sure?")
-    ///         .buttons(MessageDialogButtons::OkCancelCustom("Yes", "No"))
+    ///         .buttons(MessageDialogButtons::OkCancelCustom("Yes".to_string(), "No".to_string()))
     ///         .blocking_show();
     ///     });
     ///
@@ -494,7 +494,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog().file().pick_file(|file_path| {
@@ -521,8 +521,8 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// The recommended way to read the files is using the [`fs`](https://v2.tauri.app/plugin/file-system/) plugin:
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
-    /// use tauri_plugin_fs::FsExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::FsExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     let handle = app.handle().clone();
@@ -542,7 +542,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog().file().pick_files(|file_paths| {
@@ -566,7 +566,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog().file().pick_folder(|folder_path| {
@@ -591,7 +591,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog().file().pick_folders(|file_paths| {
@@ -616,7 +616,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// tauri::Builder::default()
     ///   .setup(|app| {
     ///     app.dialog().file().save_file(|file_path| {
@@ -643,7 +643,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// #[tauri::command]
     /// async fn my_command(app: tauri::AppHandle) {
     ///   let file_path = app.dialog().file().blocking_pick_file();
@@ -665,7 +665,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// #[tauri::command]
     /// async fn my_command(app: tauri::AppHandle) {
     ///   let file_path = app.dialog().file().blocking_pick_files();
@@ -687,7 +687,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// #[tauri::command]
     /// async fn my_command(app: tauri::AppHandle) {
     ///   let folder_path = app.dialog().file().blocking_pick_folder();
@@ -710,7 +710,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// #[tauri::command]
     /// async fn my_command(app: tauri::AppHandle) {
     ///   let folder_paths = app.dialog().file().blocking_pick_folders();
@@ -733,7 +733,7 @@ impl<R: Runtime> FileDialogBuilder<R> {
     /// # Examples
     ///
     /// ```
-    /// use tauri_plugin_dialog::DialogExt;
+    /// use tauri_plugin_advanced_file_manager::DialogExt;
     /// #[tauri::command]
     /// async fn my_command(app: tauri::AppHandle) {
     ///   let file_path = app.dialog().file().blocking_save_file();

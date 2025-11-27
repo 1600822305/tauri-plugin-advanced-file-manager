@@ -1693,6 +1693,18 @@
           "markdownDescription": "Denies the create command without any pre-configured scope."
         },
         {
+          "description": "Enables the dialog_open command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-dialog-open",
+          "markdownDescription": "Enables the dialog_open command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the dialog_open command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-dialog-open",
+          "markdownDescription": "Denies the dialog_open command without any pre-configured scope."
+        },
+        {
           "description": "Enables the exists command without any pre-configured scope.",
           "type": "string",
           "const": "allow-exists",
@@ -1775,6 +1787,30 @@
           "type": "string",
           "const": "deny-open",
           "markdownDescription": "Denies the open command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the open_path command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-open-path",
+          "markdownDescription": "Enables the open_path command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the open_path command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-open-path",
+          "markdownDescription": "Denies the open_path command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the open_url command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-open-url",
+          "markdownDescription": "Enables the open_url command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the open_url command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-open-url",
+          "markdownDescription": "Denies the open_url command without any pre-configured scope."
         },
         {
           "description": "Enables the read command without any pre-configured scope.",
@@ -1871,6 +1907,18 @@
           "type": "string",
           "const": "deny-rename",
           "markdownDescription": "Denies the rename command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the reveal_item_in_dir command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-reveal-item-in-dir",
+          "markdownDescription": "Enables the reveal_item_in_dir command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the reveal_item_in_dir command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-reveal-item-in-dir",
+          "markdownDescription": "Denies the reveal_item_in_dir command without any pre-configured scope."
         },
         {
           "description": "Enables the save command without any pre-configured scope.",
@@ -1999,10 +2047,10 @@
           "markdownDescription": "This permissions allows to create the application specific directories.\r\n"
         },
         {
-          "description": "This permission set configures the types of dialogs\r\navailable from the dialog plugin.\r\n\r\n#### Granted Permissions\r\n\r\nAll dialog types are enabled.\r\n\r\n\r\n\n#### This default permission set includes:\n\n- `allow-ask`\n- `allow-confirm`\n- `allow-message`\n- `allow-save`\n- `allow-open`",
+          "description": "This permission set configures the advanced file manager plugin\r\nwith all available commands including fs, dialog, and opener.\r\n\r\n#### Granted Permissions\r\n\r\nAll file system, dialog, and opener commands are enabled.\r\n\n#### This default permission set includes:\n\n- `allow-mkdir`\n- `allow-create`\n- `allow-copy-file`\n- `allow-remove`\n- `allow-rename`\n- `allow-write`\n- `allow-write-file`\n- `allow-write-text-file`\n- `allow-read-dir`\n- `allow-read-file`\n- `allow-read`\n- `allow-open`\n- `allow-read-text-file`\n- `allow-read-text-file-lines`\n- `allow-read-text-file-lines-next`\n- `allow-seek`\n- `allow-stat`\n- `allow-lstat`\n- `allow-fstat`\n- `allow-exists`\n- `allow-watch`\n- `allow-unwatch`\n- `allow-size`\n- `allow-truncate`\n- `allow-ftruncate`\n- `allow-dialog-open`\n- `allow-save`\n- `allow-message`\n- `allow-ask`\n- `allow-confirm`\n- `allow-open-url`\n- `allow-open-path`\n- `allow-reveal-item-in-dir`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "This permission set configures the types of dialogs\r\navailable from the dialog plugin.\r\n\r\n#### Granted Permissions\r\n\r\nAll dialog types are enabled.\r\n\r\n\r\n\n#### This default permission set includes:\n\n- `allow-ask`\n- `allow-confirm`\n- `allow-message`\n- `allow-save`\n- `allow-open`"
+          "markdownDescription": "This permission set configures the advanced file manager plugin\r\nwith all available commands including fs, dialog, and opener.\r\n\r\n#### Granted Permissions\r\n\r\nAll file system, dialog, and opener commands are enabled.\r\n\n#### This default permission set includes:\n\n- `allow-mkdir`\n- `allow-create`\n- `allow-copy-file`\n- `allow-remove`\n- `allow-rename`\n- `allow-write`\n- `allow-write-file`\n- `allow-write-text-file`\n- `allow-read-dir`\n- `allow-read-file`\n- `allow-read`\n- `allow-open`\n- `allow-read-text-file`\n- `allow-read-text-file-lines`\n- `allow-read-text-file-lines-next`\n- `allow-seek`\n- `allow-stat`\n- `allow-lstat`\n- `allow-fstat`\n- `allow-exists`\n- `allow-watch`\n- `allow-unwatch`\n- `allow-size`\n- `allow-truncate`\n- `allow-ftruncate`\n- `allow-dialog-open`\n- `allow-save`\n- `allow-message`\n- `allow-ask`\n- `allow-confirm`\n- `allow-open-url`\n- `allow-open-path`\n- `allow-reveal-item-in-dir`"
         },
         {
           "description": "This denies access to dangerous Tauri relevant files and folders by default.\n#### This permission set includes:\n\n- `deny-webview-data-linux`\n- `deny-webview-data-windows`",

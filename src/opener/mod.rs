@@ -13,7 +13,7 @@ const PLUGIN_IDENTIFIER: &str = "com.plugin.advanced_file_manager";
 #[cfg(target_os = "ios")]
 tauri::ios_plugin_binding!(init_plugin_opener);
 
-mod commands;
+pub(crate) mod commands;
 mod config;
 mod error;
 mod open;
@@ -31,10 +31,10 @@ pub struct Opener<R: Runtime> {
     // we use `fn() -> R` to silence the unused generic error
     // while keeping this struct `Send + Sync` without requiring `R` to be
     #[cfg(not(mobile))]
-    _marker: std::marker::PhantomData<fn() -> R>,
+    pub(crate) _marker: std::marker::PhantomData<fn() -> R>,
     #[cfg(mobile)]
-    mobile_plugin_handle: PluginHandle<R>,
-    require_literal_leading_dot: Option<bool>,
+    pub(crate) mobile_plugin_handle: PluginHandle<R>,
+    pub(crate) require_literal_leading_dot: Option<bool>,
 }
 
 impl<R: Runtime> Opener<R> {
@@ -43,7 +43,7 @@ impl<R: Runtime> Opener<R> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use tauri_plugin_opener::OpenerExt;
+    /// use tauri_plugin_advanced_file_manager::OpenerExt;
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -68,7 +68,7 @@ impl<R: Runtime> Opener<R> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use tauri_plugin_opener::OpenerExt;
+    /// use tauri_plugin_advanced_file_manager::OpenerExt;
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -96,7 +96,7 @@ impl<R: Runtime> Opener<R> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use tauri_plugin_opener::OpenerExt;
+    /// use tauri_plugin_advanced_file_manager::OpenerExt;
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {
@@ -125,7 +125,7 @@ impl<R: Runtime> Opener<R> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use tauri_plugin_opener::OpenerExt;
+    /// use tauri_plugin_advanced_file_manager::OpenerExt;
     ///
     /// tauri::Builder::default()
     ///   .setup(|app| {

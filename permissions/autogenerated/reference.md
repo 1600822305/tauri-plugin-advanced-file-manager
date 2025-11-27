@@ -1,19 +1,47 @@
 ## Default Permission
 
-This permission set configures the types of dialogs
-available from the dialog plugin.
+This permission set configures the advanced file manager plugin
+with all available commands including fs, dialog, and opener.
 
 #### Granted Permissions
 
-All dialog types are enabled.
+All file system, dialog, and opener commands are enabled.
 
 #### This default permission set includes the following:
 
+- `allow-mkdir`
+- `allow-create`
+- `allow-copy-file`
+- `allow-remove`
+- `allow-rename`
+- `allow-write`
+- `allow-write-file`
+- `allow-write-text-file`
+- `allow-read-dir`
+- `allow-read-file`
+- `allow-read`
+- `allow-open`
+- `allow-read-text-file`
+- `allow-read-text-file-lines`
+- `allow-read-text-file-lines-next`
+- `allow-seek`
+- `allow-stat`
+- `allow-lstat`
+- `allow-fstat`
+- `allow-exists`
+- `allow-watch`
+- `allow-unwatch`
+- `allow-size`
+- `allow-truncate`
+- `allow-ftruncate`
+- `allow-dialog-open`
+- `allow-save`
+- `allow-message`
 - `allow-ask`
 - `allow-confirm`
-- `allow-message`
-- `allow-save`
-- `allow-open`
+- `allow-open-url`
+- `allow-open-path`
+- `allow-reveal-item-in-dir`
 
 ## Permission Table
 
@@ -3056,6 +3084,32 @@ Denies the create command without any pre-configured scope.
 <tr>
 <td>
 
+`advanced-file-manager:allow-dialog-open`
+
+</td>
+<td>
+
+Enables the dialog_open command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:deny-dialog-open`
+
+</td>
+<td>
+
+Denies the dialog_open command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `advanced-file-manager:allow-exists`
 
 </td>
@@ -3231,6 +3285,58 @@ Enables the open command without any pre-configured scope.
 <td>
 
 Denies the open command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:allow-open-path`
+
+</td>
+<td>
+
+Enables the open_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:deny-open-path`
+
+</td>
+<td>
+
+Denies the open_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:allow-open-url`
+
+</td>
+<td>
+
+Enables the open_url command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:deny-open-url`
+
+</td>
+<td>
+
+Denies the open_url command without any pre-configured scope.
 
 </td>
 </tr>
@@ -3439,6 +3545,32 @@ Enables the rename command without any pre-configured scope.
 <td>
 
 Denies the rename command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:allow-reveal-item-in-dir`
+
+</td>
+<td>
+
+Enables the reveal_item_in_dir command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`advanced-file-manager:deny-reveal-item-in-dir`
+
+</td>
+<td>
+
+Denies the reveal_item_in_dir command without any pre-configured scope.
 
 </td>
 </tr>

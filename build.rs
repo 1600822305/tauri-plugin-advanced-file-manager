@@ -78,6 +78,7 @@ const BASE_DIR_VARS: &[&str] = &[
     "APPLOG",
 ];
 const COMMANDS: &[(&str, &[&str])] = &[
+    // FS commands
     ("mkdir", &[]),
     ("create", &[]),
     ("copy_file", &[]),
@@ -104,6 +105,16 @@ const COMMANDS: &[(&str, &[&str])] = &[
     // TODO: Remove this in v3
     ("unwatch", &[]),
     ("size", &[]),
+    // Dialog commands
+    ("dialog_open", &[]),
+    ("save", &[]),
+    ("message", &[]),
+    ("ask", &[]),
+    ("confirm", &[]),
+    // Opener commands
+    ("open_url", &[]),
+    ("open_path", &[]),
+    ("reveal_item_in_dir", &[]),
 ];
 
 fn main() {

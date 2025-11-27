@@ -118,10 +118,10 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
     /// let mut options = OpenOptions::new();
-    /// let file = options.read(true).open("foo.txt");
+    /// options.read(true);
     /// ```
     #[must_use]
     pub fn new() -> Self {
@@ -136,9 +136,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().read(true).open("foo.txt");
+    /// let options = OpenOptions::new().read(true);
     /// ```
     pub fn read(&mut self, read: bool) -> &mut Self {
         self.read = read;
@@ -156,9 +156,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().write(true).open("foo.txt");
+    /// let options = OpenOptions::new().write(true);
     /// ```
     pub fn write(&mut self, write: bool) -> &mut Self {
         self.write = write;
@@ -208,9 +208,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().append(true).open("foo.txt");
+    /// let options = OpenOptions::new().append(true);
     /// ```
     pub fn append(&mut self, append: bool) -> &mut Self {
         self.append = append;
@@ -227,9 +227,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().write(true).truncate(true).open("foo.txt");
+    /// let options = OpenOptions::new().write(true).truncate(true);
     /// ```
     pub fn truncate(&mut self, truncate: bool) -> &mut Self {
         self.truncate = truncate;
@@ -245,9 +245,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().write(true).create(true).open("foo.txt");
+    /// let options = OpenOptions::new().write(true).create(true);
     /// ```
     pub fn create(&mut self, create: bool) -> &mut Self {
         self.create = create;
@@ -279,11 +279,10 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// use tauri_plugin_fs::OpenOptions;
+    /// use tauri_plugin_advanced_file_manager::OpenOptions;
     ///
-    /// let file = OpenOptions::new().write(true)
-    ///                              .create_new(true)
-    ///                              .open("foo.txt");
+    /// let options = OpenOptions::new().write(true)
+    ///                              .create_new(true);
     /// ```
     pub fn create_new(&mut self, create_new: bool) -> &mut Self {
         self.create_new = create_new;
@@ -406,6 +405,7 @@ impl<R: Runtime, T: Manager<R>> FsExt<R> for T {
 pub fn init<R: Runtime>() -> TauriPlugin<R, Option<config::Config>> {
     PluginBuilder::<R, Option<config::Config>>::new("advanced-file-manager")
         .invoke_handler(tauri::generate_handler![
+            // FS commands
             commands::create,
             commands::open,
             commands::copy_file,
@@ -431,13 +431,27 @@ pub fn init<R: Runtime>() -> TauriPlugin<R, Option<config::Config>> {
             commands::size,
             #[cfg(feature = "watch")]
             watcher::watch,
+            // Dialog commands
+            dialog::commands::dialog_open,
+            dialog::commands::save,
+            dialog::commands::message,
+            dialog::commands::ask,
+            dialog::commands::confirm,
+            // Opener commands
+            opener::commands::open_url,
+            opener::commands::open_path,
+            opener::commands::reveal_item_in_dir,
         ])
         .setup(|app, api| {
+            // 提前获取配置值
+            let require_literal_leading_dot = api
+                .config()
+                .as_ref()
+                .and_then(|c| c.require_literal_leading_dot);
+
+            // FS scope setup
             let scope = Scope {
-                require_literal_leading_dot: api
-                    .config()
-                    .as_ref()
-                    .and_then(|c| c.require_literal_leading_dot),
+                require_literal_leading_dot,
                 scope: tauri::fs::Scope::new(app, &FsScope::default())?,
             };
 
@@ -447,9 +461,23 @@ pub fn init<R: Runtime>() -> TauriPlugin<R, Option<config::Config>> {
                 app.manage(fs);
             }
             #[cfg(not(target_os = "android"))]
-            app.manage(Fs(app.clone()));
+            {
+                app.manage(Fs(app.clone()));
+
+                // Dialog setup (desktop)
+                let dialog = dialog::desktop::init(app, api)?;
+                app.manage(dialog);
+
+                // Opener setup (desktop)
+                let opener: Opener<R> = Opener {
+                    _marker: std::marker::PhantomData,
+                    require_literal_leading_dot,
+                };
+                app.manage(opener);
+            }
 
             app.manage(scope);
+
             Ok(())
         })
         .on_event(|app, event| {

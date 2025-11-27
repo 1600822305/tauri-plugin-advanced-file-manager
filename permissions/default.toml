@@ -2,19 +2,48 @@
 
 [default]
 description = """
-This permission set configures the types of dialogs
-available from the dialog plugin.
+This permission set configures the advanced file manager plugin
+with all available commands including fs, dialog, and opener.
 
 #### Granted Permissions
 
-All dialog types are enabled.
-
-
+All file system, dialog, and opener commands are enabled.
 """
 permissions = [
+  # FS commands  
+  "allow-mkdir",
+  "allow-create",
+  "allow-copy-file",
+  "allow-remove",
+  "allow-rename",
+  "allow-write",
+  "allow-write-file",
+  "allow-write-text-file",
+  "allow-read-dir",
+  "allow-read-file",
+  "allow-read",
+  "allow-open",
+  "allow-read-text-file",
+  "allow-read-text-file-lines",
+  "allow-read-text-file-lines-next",
+  "allow-seek",
+  "allow-stat",
+  "allow-lstat",
+  "allow-fstat",
+  "allow-exists",
+  "allow-watch",
+  "allow-unwatch",
+  "allow-size",
+  "allow-truncate",
+  "allow-ftruncate",
+  # Dialog commands
+  "allow-dialog-open",
+  "allow-save",
+  "allow-message",
   "allow-ask",
   "allow-confirm",
-  "allow-message",
-  "allow-save",
-  "allow-open",
+  # Opener commands
+  "allow-open-url",
+  "allow-open-path",
+  "allow-reveal-item-in-dir",
 ]

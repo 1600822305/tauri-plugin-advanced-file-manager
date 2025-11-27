@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-package com.plugin.fs
+package com.plugin.advanced_file_manager
 
 import org.junit.Test
 
