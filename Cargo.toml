@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-advanced-file-manager"
-version = "0.1.0"
+version = "0.1.1"
 authors = [ "AetherLink" ]
 description = "Advanced file manager plugin combining fs, dialog, and opener functionality"
 license = "Apache-2.0"
