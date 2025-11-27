@@ -1,0 +1,74 @@
+[package]
+name = "tauri-plugin-advanced-file-manager"
+version = "0.1.0"
+authors = [ "AetherLink" ]
+description = "Advanced file manager plugin combining fs, dialog, and opener functionality"
+edition = "2021"
+rust-version = "1.77.2"
+exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]
+links = "tauri-plugin-advanced-file-manager"
+
+[build-dependencies]
+tauri-plugin = { version = "2.5.1", features = ["build"] }
+schemars = "0.8"
+serde = "1.0"
+toml = "0.8"
+tauri-utils = { version = "2", features = ["build"] }
+
+[dependencies]
+tauri = { version = "2.9.2" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_repr = "0.1"
+thiserror = "2"
+url = "2"
+anyhow = "1"
+glob = "0.3"
+dunce = "1"
+percent-encoding = "2"
+log = "0.4"
+# Opener dependencies
+open = { version = "5", features = ["shellexecute-on-windows"] }
+# Watch feature
+notify = { version = "8", optional = true, features = ["serde", "serialization-compat-6"] }
+notify-debouncer-full = { version = "0.6", optional = true }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+# Desktop dialog dependencies
+[target.'cfg(any(target_os = "macos", windows, target_os = "linux", target_os = "dragonfly", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd"))'.dependencies]
+rfd = { version = "0.15", default-features = false, features = ["tokio", "common-controls-v6"] }
+raw-window-handle = "0.6"
+
+# Windows opener dependencies
+[target.'cfg(windows)'.dependencies.windows]
+version = "0.61"
+features = [
+  "Win32_Foundation",
+  "Win32_UI_Shell_Common",
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_System_Com",
+  "Win32_System_Registry",
+]
+
+# Linux opener dependencies
+[target.'cfg(any(target_os = "linux", target_os = "dragonfly", target_os = "freebsd", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
+zbus = "5"
+
+# macOS opener dependencies
+[target.'cfg(target_os = "macos")'.dependencies.objc2-app-kit]
+version = "0.3"
+default-features = false
+features = ["std", "NSWorkspace"]
+
+[target.'cfg(target_os = "macos")'.dependencies.objc2-foundation]
+version = "0.3"
+default-features = false
+features = ["std", "NSURL", "NSArray", "NSString"]
+
+[features]
+default = ["gtk3"]
+watch = ["notify", "notify-debouncer-full"]
+xdg-portal = ["rfd/xdg-portal"]
+gtk3 = ["rfd/gtk3"]
